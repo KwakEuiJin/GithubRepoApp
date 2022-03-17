@@ -108,6 +108,7 @@ class SignInActivity : AppCompatActivity(), CoroutineScope {
             Log.d("accessToken", accessToken.toString())
             if (accessToken.isNotEmpty()) {
                 authTokenProvider.updateToken(accessToken)
+                launchMainActivity()
             } else {
                 Toast.makeText(this@SignInActivity, "엑세스 토큰이 존재하지 않습니다.", Toast.LENGTH_SHORT).show()
             }

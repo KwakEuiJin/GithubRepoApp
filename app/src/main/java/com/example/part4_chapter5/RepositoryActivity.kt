@@ -79,7 +79,7 @@ class RepositoryActivity : AppCompatActivity(), CoroutineScope {
         ownerProfileImageView.loadCenterInside(githubRepoEntity.owner.avatarUrl, 42f)
         ownerNameAndRepoNameTextView.text =
             "${githubRepoEntity.owner.login} / ${githubRepoEntity.name}"
-        stargazersCountText.text = githubRepoEntity.stargazerCount.toString()
+        stargazersCountText.text = githubRepoEntity.stargazersCount.toString()
         githubRepoEntity.language?.let {
             languageText.isGone = false
             languageText.text = it

@@ -20,7 +20,7 @@ class RepositoryRecyclerAdapter(private val clicked:(GithubRepoEntity) -> Unit) 
             ownerNameTextView.text =item.owner.login
             nameTextView.text = item.fullName
             subtextTextView.text=item.description
-            stargazersCountText.text = item.stargazerCount.toString()
+            stargazersCountText.text = item.stargazersCount.toString()
             item.language.let { language ->
                 languageText.isGone =false
                 languageText.text = language
