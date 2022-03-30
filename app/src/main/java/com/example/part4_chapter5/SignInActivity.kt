@@ -18,6 +18,7 @@ class SignInActivity : AppCompatActivity(), CoroutineScope {
 
     private lateinit var binding: ActivitySignInBinding
     private val job: Job = Job()
+    private val coroutineScope = MainScope()
 
     private val authTokenProvider by lazy {
         AuthTokenProvider(context = this)
@@ -30,10 +31,20 @@ class SignInActivity : AppCompatActivity(), CoroutineScope {
         super.onCreate(savedInstanceState)
         binding = ActivitySignInBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        if (checkAuthCodExist()){
-            launchMainActivity()
-        }else{
-        initViews()}
+
+        launch(coroutineContext) {
+            val response =
+                RetrofitUtil.githubApiService.getLoginInfo("token ${authTokenProvider.token.toString()}")
+                    .body()?.login
+            Log.d("응답확인", response.toString())
+            if (checkAuthCodExist()) {
+                launchMainActivity()
+            } else {
+                initViews()
+            }
+        }
+
+
     }
 
     private fun initViews() = with(binding) {
@@ -41,10 +52,15 @@ class SignInActivity : AppCompatActivity(), CoroutineScope {
             loginGitHub()
         }
     }
-    private fun checkAuthCodExist():Boolean = !authTokenProvider.token.isNullOrEmpty()
 
-    private fun launchMainActivity(){
-        startActivity(Intent(this,MainActivity::class.java).apply {
+    private suspend fun checkAuthCodExist(): Boolean =
+        !RetrofitUtil.githubApiService
+            .getLoginInfo(
+                token = "token ${authTokenProvider.token.toString()}"
+            ).body()?.login.isNullOrEmpty()
+
+    private fun launchMainActivity() {
+        startActivity(Intent(this, MainActivity::class.java).apply {
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         })
@@ -74,8 +90,6 @@ class SignInActivity : AppCompatActivity(), CoroutineScope {
                 showProgress()
                 getAccessToken(it)
                 dismissProgress()
-
-
 
             }
         }

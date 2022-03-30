@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
     <ImageView
         android:id="@+id/ownerProfileImageView"
         android:layout_width="24dp"
@@ -13,7 +14,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/ownerNameTextView"
-        tools:src="@drawable/ic_github_logo" />
+        tools:src="@drawable/ic_github_logo"
+        tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/ownerNameTextView"

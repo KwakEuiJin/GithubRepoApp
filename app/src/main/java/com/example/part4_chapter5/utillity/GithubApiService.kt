@@ -2,10 +2,9 @@ package com.example.part4_chapter5.utillity
 
 import com.example.part4_chapter5.data.entity.GithubRepoEntity
 import com.example.part4_chapter5.data.response.GithubRepoSearchResponse
+import com.example.part4_chapter5.data.response.TokenResponse
 import retrofit2.Response
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface GithubApiService {
     @GET("search/repositories")
@@ -16,6 +15,13 @@ interface GithubApiService {
         @Path("owner") ownerLogin:String,
         @Path("name") repoName:String
     ):Response<GithubRepoEntity>
+
+    @GET("user")
+    suspend fun getLoginInfo(
+        @Header("Authorization") token:String
+    ):Response<TokenResponse>
+
+
 
 
 }
